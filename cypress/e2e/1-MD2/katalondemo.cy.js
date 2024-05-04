@@ -42,5 +42,28 @@ describe("Demoqa", () => {
             AppointmentPage.visitDateOutput.should('contain.text', '30');
             AppointmentPage.commentOutput.should('have.text', 'CURA Healthcare Service');
         });
+        it("Appointment history empty", () => {
+            // Click - Make Appointment
+            HomePage.makeAppointmentbutton.click();
+            // Set username and password fields with the demo account credentials
+            LoginPage.demoUsername.then(($input) => {
+                const val = $input.val()
+                LoginPage.usernameInputField.type(val);
+            });
+            LoginPage.demoPassword.then(($input) => {
+                const val = $input.val()
+                LoginPage.passwordInputField.type(val);
+            });
+            // Click - Login
+            LoginPage.loginButton.click();
+            // Click - Menu/Stack/Burger icon
+            HomePage.menuToggleIcon.click();
+            // Validate that the sidebar is active
+            HomePage.sidebarWrapper.should('have.class', 'active');
+            // Click - History
+            HomePage.listElement.contains('History').click();
+            // Validate that - No appointment - is visible
+            HomePage.historyContent.contains('No appointment');
+        });
     });
 });
